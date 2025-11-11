@@ -14,10 +14,10 @@ export default function Nav(){
 
         <nav className="hidden md:flex gap-4 items-center">
           <a href="#/" className="text-sm text-slate-700 hover:text-slate-900">Home</a>
-          <a href="#/rentals" className="text-sm text-slate-700 hover:text-slate-900">Rentals</a>
-          <a href="#/tours" className="text-sm text-slate-700 hover:text-slate-900">Tours</a>
-          <a href="#/contact" className="text-sm text-slate-700 hover:text-slate-900">Contact</a>
-          <a href="#/rentals" className="text-sm bg-sky-600 text-white px-3 py-2 rounded">Book Now</a>
+          <a href="#rentals" className="text-sm text-slate-700 hover:text-slate-900">Rentals</a>
+          <a href="#tours" className="text-sm text-slate-700 hover:text-slate-900">Tours</a>
+          <a href="#contact" className="text-sm text-slate-700 hover:text-slate-900">Contact</a>
+          <a href="#rentals" className="text-sm bg-sky-600 text-white px-3 py-2 rounded">Book Now</a>
         </nav>
 
         <div className="md:hidden">
