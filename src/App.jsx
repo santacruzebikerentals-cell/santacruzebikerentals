@@ -99,7 +99,7 @@ function Home(){
 
 function WestCliffCard(){
   const slides = [
-    { type: 'image', src: '/images/bikepath.jpg' },
+    { type: 'image', src: '/images/bikepath.jpeg' },
     { type: 'video', src: '/videos/bikepath.mov' }
   ]
   const [index, setIndex] = useState(0)
