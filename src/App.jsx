@@ -147,7 +147,7 @@ function RentalCard({ title, description, images, price, duration, bookingUrl, d
       style={{ transitionDelay: `${delay}ms` }}
     >
       {/* Image Carousel - 3 images side by side */}
-      <div className="grid grid-cols-3 h-80">
+      <div className="grid grid-cols-3 h-80 relative z-0">
         {images.map((img, idx) => (
           <div
             key={idx}
@@ -182,7 +182,7 @@ function RentalCard({ title, description, images, price, duration, bookingUrl, d
       </div>
 
       {/* Card Content */}
-      <div className="p-6">
+      <div className="p-6 relative z-10 bg-white">
         <h3 className="text-2xl font-bold text-slate-900 mb-3">{title}</h3>
         <p className="text-slate-600 mb-4">{description}</p>
         <div className="flex items-center justify-between mb-4">
