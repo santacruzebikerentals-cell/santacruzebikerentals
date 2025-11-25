@@ -60,7 +60,7 @@ function VideoHero() {
   }, []);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden" style={{ paddingTop: '64px' }}>
+    <section className="relative h-screen w-full overflow-hidden">
       {/* Parallax Video Background */}
       <div className="absolute inset-0" style={{ transform: 'translateZ(-1px) scale(1.5)' }}>
         <video
@@ -75,7 +75,7 @@ function VideoHero() {
       
       <div className="absolute inset-0 bg-black/40" />
       
-      <div className="relative h-full flex flex-col items-center justify-center text-white px-8" style={{ paddingTop: '0' }}>
+      <div className="relative h-full flex flex-col items-center justify-center text-white px-8">
         <h1 className="text-5xl md:text-7xl font-bold text-center mb-4 animate-fade-in">
           Santa Cruz Bike Adventures
         </h1>
@@ -228,7 +228,7 @@ function Home(){
       <VideoHero />
       <StatsSection />
 
-      <section id="rentals" className="py-16 bg-white scroll-mt-20">
+      <section id="rentals" className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-8">
           <h2 className="text-4xl font-bold text-center mb-4">Choose Your Adventure</h2>
           <p className="text-center text-slate-600 mb-12 max-w-2xl mx-auto">
