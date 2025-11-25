@@ -1,4 +1,4 @@
-// Updated Nav component integrating Specialized Santa Cruz style
+// Updated Nav component with smooth scrolling
 import React, { useState, useRef, useEffect } from 'react'
 import Logo from './Logo'
 
@@ -22,6 +22,29 @@ export default function Nav() {
     }
   }, [open])
 
+  const handleNavClick = (e, sectionId) => {
+    e.preventDefault();
+    setOpen(false); // Close mobile menu
+    
+    // If we're not on the home page, go home first
+    if (window.location.hash && window.location.hash !== '#/') {
+      window.location.hash = '/';
+      // Wait a moment for the page to load, then scroll
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } else {
+      // We're already on home page, just scroll
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/40">
       <div className="w-full mx-auto px-6 py-3 flex items-center justify-between">
@@ -38,10 +61,10 @@ export default function Nav() {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8 uppercase text-xs font-semibold tracking-wide">
           <a href="#/" className="text-slate-700 hover:text-black transition">Home</a>
-          <a href="#rentals" className="text-slate-700 hover:text-black transition">Rentals</a>
-          <a href="#tours" className="text-slate-700 hover:text-black transition">Tours</a>
-          <a href="#contact" className="text-slate-700 hover:text-black transition">Contact</a>
-          <a href="#rentals" className="ml-4 bg-black text-white px-4 py-2 rounded-full hover:bg-slate-800 transition shadow">Book Now</a>
+          <button onClick={(e) => handleNavClick(e, 'rentals')} className="text-slate-700 hover:text-black transition">Rentals</button>
+          <button onClick={(e) => handleNavClick(e, 'tours')} className="text-slate-700 hover:text-black transition">Tours</button>
+          <button onClick={(e) => handleNavClick(e, 'contact')} className="text-slate-700 hover:text-black transition">Contact</button>
+          <button onClick={(e) => handleNavClick(e, 'rentals')} className="ml-4 bg-black text-white px-4 py-2 rounded-full hover:bg-slate-800 transition shadow">Book Now</button>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -70,16 +93,15 @@ export default function Nav() {
       >
         <div className="bg-white border-t border-slate-200 p-6 flex flex-col gap-4 uppercase text-sm font-semibold tracking-wide">
           <a href="#/" onClick={() => setOpen(false)} className="text-slate-800">Home</a>
-          <a href="#rentals" onClick={() => setOpen(false)} className="text-slate-800">Rentals</a>
-          <a href="#tours" onClick={() => setOpen(false)} className="text-slate-800">Tours</a>
-          <a href="#contact" onClick={() => setOpen(false)} className="text-slate-800">Contact</a>
-          <a
-            href="#rentals"
-            onClick={() => setOpen(false)}
+          <button onClick={(e) => handleNavClick(e, 'rentals')} className="text-slate-800 text-left">Rentals</button>
+          <button onClick={(e) => handleNavClick(e, 'tours')} className="text-slate-800 text-left">Tours</button>
+          <button onClick={(e) => handleNavClick(e, 'contact')} className="text-slate-800 text-left">Contact</button>
+          <button
+            onClick={(e) => handleNavClick(e, 'rentals')}
             className="mt-2 inline-block text-center bg-black text-white py-2 rounded-full"
           >
             Book Now
-          </a>
+          </button>
         </div>
       </div>
     </header>
