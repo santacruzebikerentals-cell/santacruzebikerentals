@@ -73,7 +73,7 @@ function VideoHero() {
         />
       </div>
       
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/20" />
       
       <div className="relative h-full flex flex-col items-center justify-center text-white px-8">
         <h1 className="text-5xl md:text-7xl font-bold text-center mb-4 animate-fade-in">
@@ -134,26 +134,32 @@ function StatsSection() {
   );
 }
 
-function RentalCard({ title, description, images, price, duration, bookingUrl, delay }) {
+function RentalCard({ title, description, images, price, duration, bookingUrl, delay, number }) {
   const [currentImage, setCurrentImage] = useState(0);
   const [ref, isVisible] = useFadeIn();
 
   return (
     <div 
       ref={ref}
-      className={`bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-1000 ${
+      className={`bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-1000 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      {/* Image Carousel - 3 images side by side */}
-      <div className="grid grid-cols-3 h-80 relative z-0">
+      {/* Image Carousel - 4 images side by side */}
+      <div className="grid grid-cols-4 h-64 overflow-hidden rounded-t-2xl">
+        {/* Number Badge */}
+        <div className="relative bg-gradient-to-br from-sky-500 to-sky-700 flex items-center justify-center">
+          <div className="text-center text-white">
+            <div className="text-6xl font-bold mb-2">{number}</div>
+            <div className="text-sm uppercase tracking-wide px-4">{title.split(' ')[0]}</div>
+          </div>
+        </div>
+        
         {images.map((img, idx) => (
           <div
             key={idx}
-            className={`relative cursor-pointer transition-all duration-300 ${
-              currentImage === idx ? 'brightness-100' : 'brightness-75 hover:brightness-90'
-            }`}
+            className="relative cursor-pointer transition-all duration-300 hover:brightness-110"
             onClick={() => setCurrentImage(idx)}
           >
             {img.type === 'map' ? (
@@ -182,7 +188,7 @@ function RentalCard({ title, description, images, price, duration, bookingUrl, d
       </div>
 
       {/* Card Content */}
-      <div className="p-6 relative z-10 bg-white">
+      <div className="p-6 bg-white">
         <h3 className="text-2xl font-bold text-slate-900 mb-3">{title}</h3>
         <p className="text-slate-600 mb-4">{description}</p>
         <div className="flex items-center justify-between mb-4">
@@ -237,6 +243,7 @@ function Home(){
 
           <div className="space-y-8">
             <RentalCard
+              number="1"
               title="Westcliff 4-Hour Adventure"
               description="Cruise the scenic coastline from the Wharf to Natural Bridges. Experience breathtaking ocean views, sea lions, and coastal wildlife."
               images={[
@@ -251,6 +258,7 @@ function Home(){
             />
 
             <RentalCard
+              number="2"
               title="Wilderness Waterfront Path Tour"
               description="A peaceful ride along estuary and coastal paths — ideal for nature lovers. Discover quiet wildlife spots, tidal wetlands, and serene waterfront views."
               images={[
@@ -265,6 +273,7 @@ function Home(){
             />
 
             <RentalCard
+              number="3"
               title="Custom Tour"
               description="Design your own adventure! Tell us what you want to see and explore, and we'll create a personalized route just for you. Perfect for special occasions or unique interests."
               images={[
