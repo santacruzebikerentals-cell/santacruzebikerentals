@@ -1,15 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Nav from './components/Nav'
+import BikeRentalBooking from './components/BikeRentalBooking';
 import InstagramFeed from './components/InstagramFeed';
+import AdventureBooking from './components/AdventureBooking.jsx';
 
-function useHashRoute() {
+export function useHashRoute() {
   const [route, setRoute] = useState(window.location.hash || '#/')
+
   useEffect(() => {
     const onHash = () => setRoute(window.location.hash || '#/')
     window.addEventListener('hashchange', onHash)
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
-  return route.replace('#','')
+
+  return route
 }
 
 // Smooth scroll utility
@@ -117,15 +121,15 @@ function StatsSection() {
             <div className="text-slate-600">Miles of Coastal Trails</div>
           </div>
           <div>
-            <div className="text-4xl font-bold text-sky-600 mb-2">100%</div>
-            <div className="text-slate-600">Family Friendly</div>
+            <div className="text-4xl font-bold text-sky-600 mb-2">Half/Full</div>
+            <div className="text-slate-600">Day Options</div>
           </div>
           <div>
-            <div className="text-4xl font-bold text-sky-600 mb-2">4hr</div>
-            <div className="text-slate-600">Perfect Adventure Length</div>
+            <div className="text-4xl font-bold text-sky-600 mb-2">4-8hr</div>
+            <div className="text-slate-600">Flexible Adventure Length</div>
           </div>
           <div>
-            <div className="text-4xl font-bold text-sky-600 mb-2">$70</div>
+            <div className="text-4xl font-bold text-sky-600 mb-2">$70+</div>
             <div className="text-slate-600">Includes Delivery & Pickup</div>
           </div>
         </div>
@@ -134,7 +138,7 @@ function StatsSection() {
   );
 }
 
-function RentalCard({ title, description, images, price, duration, bookingUrl, delay }) {
+function RentalCard({ title, description, images, price, duration, serviceId, delay }) {
   const [currentImage, setCurrentImage] = useState(0);
   const [ref, isVisible] = useFadeIn();
 
@@ -190,33 +194,11 @@ function RentalCard({ title, description, images, price, duration, bookingUrl, d
           <span className="text-slate-500">{duration}</span>
         </div>
         
-        {/* Calendar Preview */}
-        <div className="mb-4 p-3 bg-slate-50 rounded-lg">
-          <div className="text-sm font-semibold text-slate-700 mb-2">Next Available:</div>
-          <div className="grid grid-cols-3 gap-2 text-center text-xs">
-            <div className="bg-white p-2 rounded border border-slate-200">
-              <div className="font-semibold">Today</div>
-              <div className="text-green-600">3 slots</div>
-            </div>
-            <div className="bg-white p-2 rounded border border-slate-200">
-              <div className="font-semibold">Tomorrow</div>
-              <div className="text-green-600">5 slots</div>
-            </div>
-            <div className="bg-white p-2 rounded border border-slate-200">
-              <div className="font-semibold">Wed</div>
-              <div className="text-green-600">4 slots</div>
-            </div>
-          </div>
-        </div>
-
-        <a
-          href={bookingUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="block w-full bg-sky-600 hover:bg-sky-700 text-white text-center px-6 py-3 rounded-lg font-semibold transition-colors"
-        >
-          Book Now
-        </a>
+        {/* Adventure Booking Component */}
+        <AdventureBooking
+          serviceId={serviceId || ''}
+          locationId="LY85EFNS8N2Q3"
+        />
       </div>
     </div>
   );
@@ -244,9 +226,9 @@ function Home(){
                 { src: '/images/westcliff3.jpeg', label: 'Ocean Views' },
                 { type: 'map', label: 'Westcliff Route' }
               ]}
-              price="$70"
-              duration="4 hours"
-              bookingUrl="https://book.squareup.com/appointments/4nurjndxax52bh/location/LY85EFNS8N2Q3/services/FDAPVUKUCEOUMHGZ2TJXMEGH"
+              price="Starts at $70"
+              duration="Half or full day"
+              serviceId="FDAPVUKUCEOUMHGZ2TJXMEGH"
               delay={0}
             />
 
@@ -258,9 +240,9 @@ function Home(){
                 { src: '/images/bikepath.jpeg', label: 'Nature Trail' },
                 { type: 'map', label: 'Waterfront Route' }
               ]}
-              price="$70"
-              duration="4 hours"
-              bookingUrl="https://book.squareup.com/appointments/4nurjndxax52bh/location/LY85EFNS8N2Q3/services/YV7OZX2BA3SK3OIFZ7LCAMYE"
+              price="Starts at $70"
+              duration="Half or full day"
+              serviceId="YV7OZX2BA3SK3OIFZ7LCAMYE"
               delay={200}
             />
 
@@ -274,7 +256,7 @@ function Home(){
               ]}
               price="Contact us"
               duration="Flexible"
-              bookingUrl="https://book.squareup.com/appointments/4nurjndxax52bh/location/LY85EFNS8N2Q3/services/PNRDNC4GPASETSC7VWJI4MQ5"
+              serviceId="PNRDNC4GPASETSC7VWJI4MQ5"
               delay={400}
             />
           </div>
@@ -323,7 +305,7 @@ function Home(){
               <div>
                 <h4 className="font-semibold text-lg mb-2">Quick Info</h4>
                 <p className="text-sm text-slate-600">Phone: (your phone)<br/>Email: (coming soon)</p>
-                <p className="mt-4 text-sm">We charge $70 for a 4-hour rental. Drop-off and pick-up service included.</p>
+                <p className="mt-4 text-sm">Starting at $70 for half-day rental. Drop-off and pick-up service included.</p>
               </div>
             </div>
           </div>
@@ -356,9 +338,48 @@ function TourCard({ href, image, title, description, delay }) {
   );
 }
 
-function Birdwatching(){ return (<article className="max-w-5xl mx-auto px-6 py-12"><button onClick={() => (window.location.hash = '/')} className="inline-block mb-6 text-sky-600">← Return to Home</button><h2 className="text-3xl font-semibold">Birdwatching Route (Self-guided)</h2><p className="mt-4 text-slate-700">This peaceful half-day route takes you through Santa Cruz's richest bird habitats: tidal wetlands, marsh edges, and quiet estuary overlooks. Keep an eye out for herons, egrets, raptors, and seasonal migrants. We provide a route map and suggested stopping points for prime viewing.</p></article>) }
-function SurfHistory(){ return (<article className="max-w-5xl mx-auto px-6 py-12"><button onClick={() => (window.location.hash = '/')} className="inline-block mb-6 text-sky-600">← Return to Home</button><h2 className="text-3xl font-semibold">Surf History Ride (Self-guided)</h2><p className="mt-4 text-slate-700">Ride through Santa Cruz's surf legacy: legendary breaks, murals, and beachfront landmarks.</p></article>) }
-function Waterfront(){ return (<article className="max-w-5xl mx-auto px-6 py-12"><button onClick={() => (window.location.hash = '/')} className="inline-block mb-6 text-sky-600">← Return to Home</button><h2 className="text-3xl font-semibold">Wilderness Waterfront Path (Self-guided)</h2><p className="mt-4 text-slate-700">Our newest route follows tranquil waterfront paths, boardwalks, and dunes.</p></article>) }
+
+function Birdwatching(){ 
+  return (
+    <article className="max-w-5xl mx-auto px-6 py-12">
+      <button onClick={() => (window.location.hash = '/')} className="inline-block mb-6 text-sky-600">
+        ← Return to Home
+      </button>
+      <h2 className="text-3xl font-semibold">Birdwatching Route (Self-guided)</h2>
+      <p className="mt-4 text-slate-700">
+        This peaceful half-day route takes you through Santa Cruz's richest bird habitats: tidal wetlands, marsh edges, and quiet estuary overlooks. Keep an eye out for herons, egrets, raptors, and seasonal migrants. We provide a route map and suggested stopping points for prime viewing.
+      </p>
+    </article>
+  ) 
+}
+
+function SurfHistory(){ 
+  return (
+    <article className="max-w-5xl mx-auto px-6 py-12">
+      <button onClick={() => (window.location.hash = '/')} className="inline-block mb-6 text-sky-600">
+        ← Return to Home
+      </button>
+      <h2 className="text-3xl font-semibold">Surf History Ride (Self-guided)</h2>
+      <p className="mt-4 text-slate-700">
+        Ride through Santa Cruz's surf legacy: legendary breaks, murals, and beachfront landmarks.
+      </p>
+    </article>
+  ) 
+}
+
+function Waterfront(){ 
+  return (
+    <article className="max-w-5xl mx-auto px-6 py-12">
+      <button onClick={() => (window.location.hash = '/')} className="inline-block mb-6 text-sky-600">
+        ← Return to Home
+      </button>
+      <h2 className="text-3xl font-semibold">Wilderness Waterfront Path (Self-guided)</h2>
+      <p className="mt-4 text-slate-700">
+        Our newest route follows tranquil waterfront paths, boardwalks, and dunes.
+      </p>
+    </article>
+  ) 
+}
 
 export default function App(){ 
   const route = useHashRoute(); 
@@ -381,12 +402,13 @@ export default function App(){
       `}</style>
       
       <Nav />
-      {route === '/' && <Home />}
-      {route === '/rentals' && <Home />}
-      {route === '/tours' && <Home />}
-      {route === '/birdwatching' && <Birdwatching />}
-      {route === '/surf-history' && <SurfHistory />}
-      {route === '/waterfront' && <Waterfront />}
+      {route === '#/' && <Home />}
+      {route === '#/rentals' && <Home />}
+      {route === '#/tours' && <Home />}
+      {route === '#/birdwatching' && <Birdwatching />}
+      {route === '#/surf-history' && <SurfHistory />}
+      {route === '#/waterfront' && <Waterfront />}
+      {route === '#/booking' && <BikeRentalBooking />}
 
       <div className="max-w-6xl mx-auto px-4 py-12">
         <InstagramFeed />

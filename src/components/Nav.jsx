@@ -60,12 +60,17 @@ export default function Nav() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8 uppercase text-xs font-semibold tracking-wide">
-          <a href="#/" className="text-slate-700 hover:text-black transition">Home</a>
-          <button onClick={(e) => handleNavClick(e, 'rentals')} className="text-slate-700 hover:text-black transition">Rentals</button>
-          <button onClick={(e) => handleNavClick(e, 'tours')} className="text-slate-700 hover:text-black transition">Tours</button>
-          <button onClick={(e) => handleNavClick(e, 'contact')} className="text-slate-700 hover:text-black transition">Contact</button>
-          <button onClick={(e) => handleNavClick(e, 'rentals')} className="ml-4 bg-black text-white px-4 py-2 rounded-full hover:bg-slate-800 transition shadow">Book Now</button>
-        </nav>
+<a href="#/" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="text-sm text-slate-700 hover:text-slate-900">Home</a>  <button onClick={(e) => handleNavClick(e, 'rentals')} className="text-slate-700 hover:text-black transition">Rentals</button>
+  <button onClick={(e) => handleNavClick(e, 'tours')} className="text-slate-700 hover:text-black transition">Tours</button>
+  <button onClick={(e) => handleNavClick(e, 'contact')} className="text-slate-700 hover:text-black transition">Contact</button>
+
+  <a
+    href="#/booking"
+    className="ml-4 bg-indigo-600 text-white px-5 py-2 rounded-full font-medium hover:bg-indigo-700 transition-colors"
+  >
+    Book Now
+  </a>
+</nav>
 
         {/* Mobile Menu Button */}
         <button
