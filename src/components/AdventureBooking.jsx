@@ -7,6 +7,7 @@ export default function AdventureBooking({ serviceId, locationId }) {
   }
 
   const [numBikes, setNumBikes] = useState(1);
+  const [rentalDuration, setRentalDuration] = useState('half'); // 'half' or 'full'
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [availability, setAvailability] = useState([]);
@@ -54,6 +55,7 @@ export default function AdventureBooking({ serviceId, locationId }) {
       }
 
       const data = await response.json();
+      console.log("Square availability response:", data); // Debug log
       setAvailability(data.availabilities || []);
     } catch (err) {
       console.error("Availability error:", err);
@@ -65,7 +67,7 @@ export default function AdventureBooking({ serviceId, locationId }) {
 
   useEffect(() => {
     fetchAvailability();
-  }, [selectedDate, numBikes]);
+  }, [selectedDate, numBikes, rentalDuration]);
 
   const getStatusLabel = (count) => {
     if (count <= 0) return "Sold Out";
@@ -73,9 +75,47 @@ export default function AdventureBooking({ serviceId, locationId }) {
     return `${count} left`;
   };
 
+  const getPricing = () => {
+    const halfDayPrice = 70;
+    const fullDayPrice = 120; // Adjust this to your actual price
+    const price = rentalDuration === 'half' ? halfDayPrice : fullDayPrice;
+    return price * numBikes;
+  };
+
   return (
     <div className="mt-4 space-y-3 border-t pt-4">
-      {/* Compact Grid Layout - All fields visible */}
+      {/* Rental Duration Selection */}
+      <div>
+        <label className="block text-xs font-semibold text-slate-600 mb-2">
+          Rental Duration
+        </label>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => setRentalDuration('half')}
+            className={`p-3 rounded-lg border-2 transition-all text-sm font-semibold ${
+              rentalDuration === 'half'
+                ? 'border-sky-600 bg-sky-50 text-sky-700'
+                : 'border-slate-200 hover:border-slate-300 text-slate-600'
+            }`}
+          >
+            <div>Half Day</div>
+            <div className="text-xs font-normal mt-1">4 hours • $70</div>
+          </button>
+          <button
+            onClick={() => setRentalDuration('full')}
+            className={`p-3 rounded-lg border-2 transition-all text-sm font-semibold ${
+              rentalDuration === 'full'
+                ? 'border-sky-600 bg-sky-50 text-sky-700'
+                : 'border-slate-200 hover:border-slate-300 text-slate-600'
+            }`}
+          >
+            <div>Full Day</div>
+            <div className="text-xs font-normal mt-1">8 hours • $120</div>
+          </button>
+        </div>
+      </div>
+
+      {/* Compact Grid Layout */}
       <div className="grid grid-cols-2 gap-3">
         {/* Number of Bikes */}
         <div>
@@ -156,9 +196,17 @@ export default function AdventureBooking({ serviceId, locationId }) {
 
       {/* Confirm Button - Only show when time is selected */}
       {selectedTime && (
-        <button className="w-full bg-sky-600 hover:bg-sky-700 text-white py-3 rounded-lg font-semibold transition-all shadow-sm hover:shadow-md">
-          Confirm {numBikes} Bike{numBikes > 1 ? 's' : ''}
-        </button>
+        <div>
+          <div className="mb-2 p-3 bg-slate-50 rounded-lg text-sm">
+            <div className="font-semibold text-slate-800">Total: ${getPricing()}</div>
+            <div className="text-xs text-slate-600 mt-1">
+              {numBikes} bike{numBikes > 1 ? 's' : ''} × {rentalDuration === 'half' ? '4 hours' : '8 hours'}
+            </div>
+          </div>
+          <button className="w-full bg-sky-600 hover:bg-sky-700 text-white py-3 rounded-lg font-semibold transition-all shadow-sm hover:shadow-md">
+            Confirm Booking
+          </button>
+        </div>
       )}
     </div>
   );
