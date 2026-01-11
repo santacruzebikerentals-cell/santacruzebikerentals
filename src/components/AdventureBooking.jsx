@@ -13,13 +13,23 @@ export default function AdventureBooking({ serviceId, locationId }) {
   const [availability, setAvailability] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const SQUARE_TOKEN = import.meta.env.VITE_SQUARE_ACCESS_TOKEN || '';
+const fetchAvailability = async () => {
+  if (!selectedDate) return;
 
-  const fetchAvailability = async () => {
-    if (!SQUARE_TOKEN) {
-      console.warn("Square token missing, skipping availability fetch");
-      setAvailability([]);
-      return;
+  setLoading(true);
+  try {
+    const response = await fetch(`/.netlify/functions/availability?serviceId=${serviceId}&locationId=${locationId}&date=${selectedDate}`);
+    if (!response.ok) throw new Error("Server error");
+    const data = await response.json();
+    setAvailability(data.availabilities || []);
+  } catch (err) {
+    console.error("Availability error:", err);
+    setAvailability([]);
+  } finally {
+    setLoading(false);
+  }
+};
+
     }
     if (!selectedDate) return;
 
