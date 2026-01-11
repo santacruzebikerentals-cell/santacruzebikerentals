@@ -73,7 +73,7 @@ const fetchAvailability = async () => {
     } finally {
       setLoading(false);
     }
-  };
+  ;
 
   useEffect(() => {
     fetchAvailability();
@@ -220,4 +220,3 @@ const fetchAvailability = async () => {
       )}
     </div>
   );
-}
