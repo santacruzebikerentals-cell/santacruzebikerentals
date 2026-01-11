@@ -13,7 +13,6 @@ export default function AdventureBooking({ serviceId, locationId }) {
   const [availability, setAvailability] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Fetch availability via Netlify Function
   const fetchAvailability = async () => {
     if (!selectedDate) return;
 
@@ -108,4 +107,72 @@ export default function AdventureBooking({ serviceId, locationId }) {
             min={new Date().toISOString().split('T')[0]}
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="w-full px-3 py-
+            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+          />
+        </div>
+      </div>
+
+      {/* Available Times */}
+      {selectedDate && (
+        <div>
+          <label className="block text-xs font-semibold text-slate-600 mb-2">
+            Available Times
+          </label>
+          {loading ? (
+            <div className="text-center py-4">
+              <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-sky-600"></div>
+              <p className="text-xs text-slate-500 mt-2">Checking availability...</p>
+            </div>
+          ) : availability.length > 0 ? (
+            <div className="grid grid-cols-3 gap-2">
+              {availability.map((slot, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSelectedTime(slot.start_at)}
+                  className={`text-left p-2 border rounded-lg transition-all text-sm ${
+                    selectedTime === slot.start_at
+                      ? 'border-sky-600 bg-sky-50 ring-2 ring-sky-200'
+                      : 'border-slate-200 hover:border-sky-300 hover:bg-slate-50'
+                  }`}
+                >
+                  <div className="font-semibold text-slate-900">
+                    {new Date(slot.start_at).toLocaleTimeString([], { hour: 'numeric', minute:'2-digit' })}
+                  </div>
+                  <div className="text-[10px] text-sky-600 font-medium">
+                    {getStatusLabel(10)}
+                  </div>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-4 bg-slate-50 rounded-lg">
+              <p className="text-sm text-slate-500 mb-3">No available times for this date</p>
+              <p className="text-xs text-slate-400 mb-3">Try a different date</p>
+              <a 
+                href="mailto:your-email@example.com?subject=Bike Rental Inquiry" 
+                className="inline-block bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+              >
+                Email Us
+              </a>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Confirm Button */}
+      {selectedTime && (
+        <div>
+          <div className="mb-2 p-3 bg-slate-50 rounded-lg text-sm">
+            <div className="font-semibold text-slate-800">Total: ${getPricing()}</div>
+            <div className="text-xs text-slate-600 mt-1">
+              {numBikes} bike{numBikes > 1 ? 's' : ''} × {rentalDuration === 'half' ? '4 hours' : '8 hours'}
+            </div>
+          </div>
+          <button className="w-full bg-sky-600 hover:bg-sky-700 text-white py-3 rounded-lg font-semibold transition-all shadow-sm hover:shadow-md">
+            Confirm Booking
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
