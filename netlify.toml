@@ -5,6 +5,9 @@
 [build.environment]
   NODE_VERSION = "22"
 
+  [build.environment]
+SECRETS_SCAN_OMIT_KEYS = "VITE_SQUARE_ACCESS_TOKEN"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
