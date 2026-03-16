@@ -22,7 +22,7 @@ export function Hero() {
         </p>
         <div className="mt-8 flex justify-center gap-4">
           <a
-            href="#rentals"
+            href="#/book"
             className="bg-green-400 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-green-500 transition font-medium"
           >
             Book Your Ride

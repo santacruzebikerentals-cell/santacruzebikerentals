@@ -41,7 +41,7 @@ export default function Nav() {
           <a href="#rentals" className="text-slate-700 hover:text-black transition">Rentals</a>
           <a href="#tours" className="text-slate-700 hover:text-black transition">Tours</a>
           <a href="#contact" className="text-slate-700 hover:text-black transition">Contact</a>
-          <a href="#rentals" className="ml-4 bg-black text-white px-4 py-2 rounded-full hover:bg-slate-800 transition shadow">Book Now</a>
+          <a href="#/book" className="ml-4 bg-black text-white px-4 py-2 rounded-full hover:bg-slate-800 transition shadow">Book Now</a>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -74,7 +74,7 @@ export default function Nav() {
           <a href="#tours" onClick={() => setOpen(false)} className="text-slate-800">Tours</a>
           <a href="#contact" onClick={() => setOpen(false)} className="text-slate-800">Contact</a>
           <a
-            href="#rentals"
+            href="#/book"
             onClick={() => setOpen(false)}
             className="mt-2 inline-block text-center bg-black text-white py-2 rounded-full"
           >

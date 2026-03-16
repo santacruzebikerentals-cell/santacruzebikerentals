@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Nav from './components/Nav'
 import { Hero } from './components/Hero'
 import InstagramFeed from './components/InstagramFeed';
+import BookingPage from './components/BookingPage';
 
 
 function useHashRoute() {
@@ -25,13 +26,12 @@ function Home(){
 
         <div className="mt-6 grid md:grid-cols-2 gap-6">
           <WestCliffCard />
-          <a href="https://book.squareup.com/appointments/4nurjndxax52bh/location/LY85EFNS8N2Q3/services/YV7OZX2BA3SK3OIFZ7LCAMYE"
-             target="_blank" rel="noreferrer" className="card">
+          <a href="#/book" className="card">
             <div className="card-image" style={{backgroundImage: "url('/images/wilderness-waterfront.jpg')"}} />
             <div className="p-5">
               <h3 className="text-lg font-semibold text-slate-900">Wilderness Waterfront Path Tour</h3>
               <p className="mt-2 text-sm text-slate-600">A peaceful ride along estuary and coastal paths — ideal for nature lovers.</p>
-              <p className="mt-3 font-medium text-sky-600">Guided or self-guided · ~4 hours</p>
+              <p className="mt-3 font-medium text-sky-600">Guided or self-guided · from $70</p>
             </div>
           </a>
         </div>
@@ -41,9 +41,7 @@ function Home(){
       {/* Custom Tour Button */}
       <div className="mt-8 flex justify-center">
         <a 
-          href="https://book.squareup.com/appointments/4nurjndxax52bh/location/LY85EFNS8N2Q3/services/PNRDNC4GPASETSC7VWJI4MQ5" 
-          target="_blank" 
-          rel="noreferrer"
+          href="#/book" 
           className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
         >
           Custom Tour
@@ -147,9 +145,7 @@ function WestCliffCard() {
 
   return (
     <a
-      href="https://book.squareup.com/appointments/4nurjndxax52bh/location/LY85EFNS8N2Q3/services/FDAPVUKUCEOUMHGZ2TJXMEGH"
-      target="_blank"
-      rel="noreferrer"
+      href="#/book"
       className="card relative"
     >
       <div className="relative w-full h-96 overflow-hidden rounded-t-xl bg-slate-100">
@@ -225,6 +221,7 @@ export default function App(){
       {route === '/' && <Home />}
       {route === '/rentals' && <Home />}
       {route === '/tours' && <Home />}
+      {route === '/book' && <BookingPage />}
       {route === '/birdwatching' && <Birdwatching />}
       {route === '/surf-history' && <SurfHistory />}
       {route === '/waterfront' && <Waterfront />}
